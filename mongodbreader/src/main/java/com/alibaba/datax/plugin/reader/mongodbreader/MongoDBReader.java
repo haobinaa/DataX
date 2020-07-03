@@ -151,6 +151,8 @@ public class MongoDBReader extends Reader {
                     if (tempCol == null) {
                         //continue; 这个不能直接continue会导致record到目的端错位
                         record.addColumn(new StringColumn(null));
+                        // fix 这里不能直接填充为null， 不然会在传输的时候 dataX 会抛数据源不对齐的异常
+                        record.addColumn(new StringColumn(""));
                     }else if (tempCol instanceof Double) {
                         //TODO deal with Double.isNaN()
                         record.addColumn(new DoubleColumn((Double) tempCol));
